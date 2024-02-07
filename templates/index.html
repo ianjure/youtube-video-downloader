@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Youtube Video Downloader</title>
+        <link rel="icon" type="image/x-icon" href="/static/favicon.svg">
+        <style>
+            .whole {
+                margin: auto;
+                text-align: center;
+            }
+
+            body {
+                margin-top: -20px;
+                margin-left: 0px;
+                margin-right: 0px;
+                background-color: #272727;
+            }
+
+            h1 {
+                font-size: 50px;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                color: antiquewhite;
+                text-align: center;
+            }
+
+            .github {
+                margin-left: 25px;
+                margin-top: 30px;
+                margin-bottom: -30px;
+                margin-right: 0px;
+                width: 35px;
+                height: 35px;
+                opacity: 50%;
+            }
+
+            .github:hover {
+                opacity: 100%;
+                cursor: pointer;
+            }
+
+            input[type=text] {
+                color: antiquewhite;
+                font-size: 20px;
+                font-family: Arial, Helvetica, sans-serif;
+                width: 300px;
+                height: 10px;
+                padding: 15px 15px;
+                border-radius: 7px;
+                border-color: #EFD09E;
+
+                background-color: #272727;
+            }
+
+            input::placeholder {
+                color: antiquewhite;
+            }
+
+            input, select, textarea {
+                color: antiquewhite;
+            }
+
+            textarea:focus, input:focus {
+                color: antiquewhite;
+            }
+
+            .find {
+                margin: auto;
+                justify-content: center;
+                display: flex;
+            }
+
+            .findButton {
+                background-color: #D4AA7D;
+                font-family: Helvetica;
+                font-weight: bold;
+                color: #272727;
+                border-radius: 7px;
+                width: max-content;
+                height: 45px;
+                margin-left: 10px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                padding-left: 20px;
+                padding-right: 20px;
+                font-size: 20px;
+                display: block;
+                border-color: #D4AA7D;
+            }
+
+            .findButton:hover, 
+            .findButton:focus {
+                background-color: antiquewhite;
+                border-color: antiquewhite;
+                color: #272727;
+                cursor: pointer;
+            }
+
+            .downloadButtonMP4 {
+                background-color: #272727;
+                font-family: Helvetica;
+                font-weight: bold;
+                color: #90A9B7;
+                border-radius: 7px;
+                width: max-content;
+                height: 48px;
+                margin-right: 0px;
+                margin-left: 0px;
+                margin-top: 25px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                padding-left: 18px;
+                padding-right: 18px;
+                font-size: 20px;
+                border-color: #90A9B7;
+                transition: 0.25s;
+            }
+
+            .downloadButtonMP3 {
+                background-color: #272727;
+                font-family: Helvetica;
+                font-weight: bold;
+                color: #D2D8B3;
+                border-radius: 7px;
+                width: max-content;
+                height: 48px;
+                margin-left: 0px;
+                margin-right: 0px;
+                margin-top: 15px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                padding-left: 18px;
+                padding-right: 18px;
+                font-size: 20px;
+                border-color: #D2D8B3;
+                transition: 0.25s;
+            }
+
+            .downloadButtonMP4:hover,
+            .downloadButtonMP4:focus {
+                background-color: #90A9B7;
+                color: #272727;
+                box-shadow: 0 0.5em 0.5em -0.4em black;
+                transform: translateY(-0.25em);
+                cursor: pointer;
+            }
+
+            .downloadButtonMP3:hover,
+            .downloadButtonMP3:focus {
+                background-color: #D2D8B3;
+                color: #272727;
+                box-shadow: 0 0.5em 0.5em -0.4em black;
+                transform: translateY(-0.25em);
+                cursor: pointer;
+            }
+
+            .title {
+                font-size: 150%;
+                font-weight: 500;
+                padding-top: 0px;
+                margin-left: 50px;
+                margin-right: 50px;
+                font-family: Arial, Helvetica, sans-serif;
+                color: white;
+                text-align: center;
+            }
+
+            .errorMessage {
+                font-size: 120%;
+                font-weight: 200;
+                padding-top: 10px;
+                margin-left: 50px;
+                margin-right: 50px;
+                font-family: Arial, Helvetica, sans-serif;
+                color: white;
+                text-align: center;
+            }
+
+            .image {
+                width: 40%;
+                height: auto;
+                border-radius: 10px;
+                box-shadow: 0em 0em 0em 0.1em grey;
+            }
+
+            .dbutton {
+                margin: auto;
+            }
+
+            #loader {
+                border: 12px solid #EFD09E;
+                border-radius: 50%;
+                border-top: 12px solid #444444;
+                width: 70px;
+                height: 70px;
+                animation: spin 1s linear infinite;
+            }
+ 
+            .center {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                margin: auto;
+            }
+ 
+            @keyframes spin {
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+            @import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
+            h2 {
+                color: white;
+                font-size: 20px;
+                font-family: 'Roboto', sans-serif;
+                font-weight: 700;
+                text-align: center;
+                height: 30px;
+                margin-top: 0px;
+                padding-top: 20px;
+                padding-bottom: 10px;
+                margin-bottom: -20px;
+                background-color: rgba(0, 0, 0, 0.7);
+            }
+                span[class^="dot-"]{
+                opacity: 0;
+            }
+            .dot-one {
+                animation: dot-one 2s infinite linear
+            }
+            .dot-two {
+                animation: dot-two 2s infinite linear
+            }
+            .dot-three {
+                animation: dot-three 2s infinite linear
+            }
+            @keyframes dot-one {
+                0%{
+                    opacity: 0;
+                }
+                15%{
+                    opacity: 0;
+                }
+                25%{
+                    opacity: 1;
+                }
+                100%{
+                    opacity: 1;
+                }
+            }
+
+            @keyframes dot-two {
+                0%{
+                    opacity: 0;
+                }
+                25%{
+                    opacity: 0;
+                }
+                50%{
+                    opacity: 1;
+                }
+                100%{
+                    opacity: 1;
+                }
+            }
+
+            @keyframes dot-three {
+                0%{
+                    opacity: 0;
+                }
+                50%{
+                    opacity: 0;
+                }
+                75%{
+                    opacity: 1;
+                }
+                100%{
+                    opacity: 1;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="loader" class="center" style="display: none"></div>
+        <div id="loaderText" class="center" style="display: none">
+            <div class="loading-text">
+              <h2>DOWNLOADING
+                <span class="dot-one"> .</span>
+                <span class="dot-two"> .</span>
+                <span class="dot-three"> .</span>
+              </h2>
+            </div>
+        </div>
+        <p>
+            <a href="https://github.com/ianjure/yt-video-downloader" target="_blank">
+                <img class="github" id="github" src="/static/github-mark-white.svg">
+            </a>
+        </p>
+        <div class="whole">
+            <h1>YouTube Video Downloader</h1>
+            <form class="convertForm" action="/find" method="post">
+                <div class="find">
+                    <input type="text" name="link" placeholder="Enter link...">
+                    <button class="findButton" type="submit">Find</button>
+                </div>
+            </form>
+            <br/>
+            <form id="info" class="downloadForm" action="/downloadMP4" method="post">
+                <div class="field">
+                    <p class="title" id="title">{{title}}</p>
+                    <img class="image" id="thumbnail" src="{{thumbnail}}">
+                    <input type="hidden" name="url" value="{{link}}">
+                    <input id="state" type="hidden" name="state" value="{{state}}">
+                    <input id="error" type="hidden" name="error" value="{{error}}">
+                </div>
+                <div id="dbuttonmp4" class="dbuttonmp4">
+                    <button class="downloadButtonMP4" onclick="change()">Download as MP4</button>
+                </div>
+            </form>
+            <form id="mp3" action="/downloadMP3" method="post">
+                <input type="hidden" name="url" value="{{link}}">
+                <div id="dbuttonmp3" class="dbuttonmp3">
+                    <button class="downloadButtonMP3" onclick="change()">Download as MP3</button>
+                </div>
+            </form>
+            <p class="errorMessage" id="errorMessage">{{message}}</p>
+        </div>
+        <script>
+            if (document.getElementById("state").value == "none"){
+                document.getElementById("info").style.display = "none";
+                document.getElementById("mp3").style.display = "none";
+            } else if (document.getElementById("error").value == "true"){
+                document.getElementById("dbuttonmp4").style.display = "none";
+                document.getElementById("dbuttonmp3").style.display = "none";
+                document.getElementById("errorMessage").style.display = "block";
+                document.getElementById("info").style.display = "block";
+            } else {
+                document.getElementById("info").style.display = "block";
+                document.getElementById("errorMessage").style.display = "none";
+                document.getElementById("dbuttonmp4").style.display = "block";
+                document.getElementById("dbuttonmp3").style.display = "block";
+            }
+
+            function change() {
+                document.body.style.cursor="progress";
+                document.getElementById("github").style.visibility="hidden";
+                document.getElementById("loader").style.display="block";
+                document.getElementById("loaderText").style.display="block";
+            }
+        </script>
+    </body>
+</html>
